@@ -26,5 +26,6 @@ module.exports = {
         indent: ["error", 4],
         "object-curly-spacing": ["error", "always"],
         "quote-props": ["error", "as-needed"],
+        "max-len": ["error", 120],
     },
 };
