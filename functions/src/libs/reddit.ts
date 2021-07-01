@@ -19,6 +19,7 @@ export interface ISubredditDetails {
     subscribers: number;
     name: string;
     quarantine: boolean;
+    active_user_count: number;
     advertiser_category: string; // Category
     public_description: string;
     community_icon: string;
@@ -37,15 +38,15 @@ export interface ISubredditListNode {
 }
 
 export interface ISubredditList {
-    modhash: string;
-    dist: number;
+    modhash?: string;
+    dist?: number;
     children: ISubredditListNode[];
-    after: string;
+    after?: string;
     before?: string;
 }
 
 export interface ISubredditListing {
-    kind: string;
+    kind?: string;
     data: ISubredditList;
 }
 
