@@ -4,4 +4,5 @@ import * as admin from "firebase-admin";
 dotenv.config();
 admin.initializeApp();
 
-export { scrapeSubreddits } from "./endpoints/scrapeSubreddits";
+export { create } from "./endpoints/scrape/create/create";
+export { update } from "./endpoints/scrape/update/update";
