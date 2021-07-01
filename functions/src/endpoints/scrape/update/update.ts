@@ -1,5 +1,5 @@
 import * as functions from "firebase-functions";
-import { db, FieldValue } from "../../../libs/firebase";
+import { db, FieldValue, FUNCTION_REGION } from "../../../libs/firebase";
 import {
     getAccessToken,
     ISubredditListing,
@@ -73,6 +73,7 @@ const runtimeOpts: functions.RuntimeOptions = {
 };
 
 export const update = functions
+    .region(FUNCTION_REGION)
     .runWith(runtimeOpts)
     .https.onRequest(async (_, response) => {
         const accessToken = await getAccessToken();
@@ -83,5 +84,22 @@ export const update = functions
             console.error(error);
             functions.logger.error(error);
             response.sendStatus(500);
+        }
+    });
+
+export const scheduledFunctionCrontab = functions
+    .region(FUNCTION_REGION)
+    .pubsub.schedule("30 0 * * *")
+    .timeZone("Europe/London")
+    .onRun(async (context) => {
+        const accessToken = await getAccessToken();
+        try {
+            await updateSubredditsByListing(accessToken, 0);
+            functions.logger.info(
+                `Update successfuly complete at ${context.timestamp}`
+            );
+        } catch (error) {
+            console.error(error);
+            functions.logger.error(error);
         }
     });

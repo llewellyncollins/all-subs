@@ -1,5 +1,5 @@
 import * as functions from "firebase-functions";
-import { db, FieldValue } from "../../../libs/firebase";
+import { db, FieldValue, FUNCTION_REGION } from "../../../libs/firebase";
 import {
     getAccessToken,
     ISubredditListing,
@@ -74,6 +74,7 @@ const runtimeOpts: functions.RuntimeOptions = {
 };
 
 export const create = functions
+    .region(FUNCTION_REGION)
     .runWith(runtimeOpts)
     .https.onRequest(async (_, response) => {
         const accessToken = await getAccessToken();
