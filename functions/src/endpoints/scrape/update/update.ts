@@ -37,6 +37,7 @@ const updateSubredditsByListing = async (
             const statsRef = db.collection("stats").doc("subreddits");
             await statsRef.update({
                 count: FieldValue.increment(updatedNodeCount),
+                updated: FieldValue.serverTimestamp(),
             });
 
             // TODO: move pagination navigation into it's own function

@@ -39,6 +39,7 @@ const createSubredditsByListing = async (
             const statsRef = db.collection("stats").doc("subreddits");
             await statsRef.update({
                 count: FieldValue.increment(updatedNodeCount),
+                updated: FieldValue.serverTimestamp(),
             });
 
             if (listing.data?.after) {
